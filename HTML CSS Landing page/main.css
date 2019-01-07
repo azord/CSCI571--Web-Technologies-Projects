@@ -1,0 +1,153 @@
+body:before, body:after {
+	width: 100%;
+	font-family: 'OpenSans-Regular', sans-serif, arial; 
+}
+
+body {
+	margin: 0px;
+}
+
+h1 {
+	font-family: 'OpenSans-Regular', sans-serif, arial;
+}
+a {
+	text-decoration: none;
+}
+.section1 {
+	padding-top: 10px;
+	margin-left: 87px;
+}
+.section2 {
+	position: absolute; 
+	clip: rect(120px,1118px,583px,266px);
+	width:1380px;
+	margin-left:-268px;
+	margin-top: -122px;
+}
+
+.section6 {
+	position: absolute; 
+	clip: rect(215px,1446px,553px,0px);
+	width:848px;
+	margin-left:0px;
+	margin-top: -182px;
+}
+
+.last {
+	background-color: #BD9B5C;
+	width: 100%;
+	margin-top: -13px;
+	height: 170px;	
+}
+
+#parent {
+  text-align: center;
+  margin-left: -39.5px;
+  font-size: 9px;
+}
+#parent li {
+  display: inline-block;
+  padding: 0px 35px;
+}
+
+#address {
+	margin-bottom: 0px;
+	font-size: 9px;
+}
+
+#lastText {
+	padding-top: 62px;
+	color: white;
+	padding-left: 410px;
+	font-size: 9px;
+}
+
+.description {
+	
+	font-size: 9px;
+}
+
+.image7 {
+	margin-left: 78px;
+	width: 487px;
+	
+}
+
+.rectangle {
+	width: 204px;
+	height: 73px;
+	background-color: white;
+	position: absolute;
+	margin-top: -202px;
+	margin-left: 219px;
+}
+
+.inside {
+	position: absolute;
+	margin-top: -176px;
+	margin-left: 279px;
+	width: 120px;
+}
+
+#thyme {
+	font-family: 'OpenSans-Regular', sans-serif, arial;
+	letter-spacing: 3px;
+	color: #bd9c58;
+	margin: 0px 0px 29px -83px;
+	font-size: 36px;
+	font-weight: 500;
+}
+
+.local {
+	font-style:italic;
+	color: #bd9c58;
+	font-size:20px;
+	margin: 0px;
+	font-weight: 800;
+	margin-top: -4px;
+}
+
+#restaurant {
+	font-size: 9px;
+}
+
+.main-image {
+    background-image: url("http://cs-server.usc.edu:45678/hw/hw3/images/image6.jpg");
+
+    background-attachment: fixed;
+    background-position: -205px 54px;
+    background-repeat: no-repeat;
+	padding: 177px;
+}
+
+.last-bg {
+    background-image: url("http://cs-server.usc.edu:45678/hw/hw3/images/image5.jpg");
+
+    background-attachment: fixed;
+    background-position: 0px 116px;
+    background-repeat: no-repeat;
+	padding: 134px;
+	background-size: 655px;
+}
+
+.cover {
+	width: 203px;
+	height: 360px;
+	background-color: white;
+	position: absolute;
+	margin-top: -358px;
+	margin-left: 652px;
+}
+
+.font-color {
+	color: #64635e;
+}
+
+.font-color2 {
+	color: #605e5e;
+}
+
+.read-more {
+	color:#2f2e2e; 
+	font-weight: 500;
+}
