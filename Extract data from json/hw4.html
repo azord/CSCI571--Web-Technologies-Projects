@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HW4</title>
+<meta charset="utf-8"/>
+</head>
+<style>
+	.form {
+		display:block;
+		text-align: center;
+	}	
+</style>
+<body>
+<br>
+<br>
+<br>
+<div class="form">
+<form name="jsonExtracker" >
+<p style="font-weight: bold; font-size: 18px;">Enter URL for Trucking List JSON File</p>
+	<p>
+	<input type="text" name="URL" maxlength="255" size="30" value="">
+	</p>
+	<p>
+	<input type="button" name="submit" value="Submit Query" 
+	onClick="displayJSON(this.form)"
+	/>
+	</p>
+</form>
+</div>
+<p id="demo"></p>
+
+<script type="text/javascript">
+function displayJSON(thisUrl) {
+	
+	var url = thisUrl.URL.value;
+	
+	function extractJSON(url) {
+	
+	var xmlhttp = new XMLHttpRequest();
+	
+	xmlhttp.open("GET", url, false);
+	
+	/*xmlhttp.onreadystatechange = function () {
+		if (xmlhttp.readyState === 4 && xmlhttp.status == 404) {
+		alert("File doesn't exist");
+		
+		callback(xmlhttp.responseText);
+		
+		window.location = window.location.href.split("?")[0];
+		}
+	}*/
+	
+	
+	xmlhttp.send();
+	
+	try {
+		JSON.parse(xmlhttp.responseText);
+	} catch (e) {
+		alert("JSON file is not valid");
+		window.location = window.location.href.split("?")[0];
+	}
+	
+	
+	
+	try {
+	jsonObj= JSON.parse(xmlhttp.responseText);
+	}
+	catch(exception) {
+		if (exception.name == "XML Parsing Error") {
+			alert("No trucking companies");
+			window.location = window.location.href.split("?")[0];
+		}
+	}
+	
+	
+	if (typeof jsonObj.Mainline.Table.Row == 'undefined') {
+		alert("No trucking companies");
+		window.location = window.location.href.split("?")[0];
+		return;
+	}
+	
+	if (typeof jsonObj.Mainline.Table.Row[0] == "undefined") {
+		alert("No trucking companies");
+		window.location = window.location.href.split("?")[0];
+		return;
+	}
+	
+	/*if (jsonObj.Mainline.Table.Row[0].Company == "" && jsonObj.Mainline.Table.Row[0].Services == "" && 
+	jsonObj.Mainline.Table.Row[0].Revenue == "" && jsonObj.Mainline.Table.Row[0].HomePage == "" && jsonObj.Mainline.Table.Row[0].Logo == "") {
+		alert("Company information is empty");
+		window.location = window.location.href.split("?")[0];
+		return;
+	}*/
+	
+	
+	
+	return jsonObj;
+	}
+	
+	if (url == "") {
+		alert("Input is empty");
+		window.location = window.location.href.split("?")[0];
+	} else 
+	{
+	jsonObj = extractJSON(url);
+	}
+
+	jsonObj.onload = generateHTML(jsonObj);
+	
+	
+	function generateHTML(jsonObj) {
+		root = jsonObj.DocumentElement;
+		
+		html_text = "<html><head><title>JSON Parse Result</title><meta charset='UTF-8'></head><body>";
+		
+		html_text+="<table border='2' cellpadding='10'><tr>";
+		
+		var header_keys = jsonObj.Mainline.Table.Header.Data;
+		
+		for (i = 0; i < header_keys.length; i++) 
+		{
+			if (header_keys[i] === null) 
+			{
+				html_text += "<th style='font-weight:bold;'>" + "" + "</th>";
+			}
+			else 
+			{
+				html_text += "<th style='font-weight:bold;'>" + header_keys[i] + "</th>";
+			}
+		}
+	
+		html_text += "</tr>";
+		
+		var values = jsonObj.Mainline.Table.Row;
+		
+		
+		for (i = 0; i < values.length; i++) 
+		{
+			html_text += "<tr>";
+			
+			var data = Object.values(jsonObj.Mainline.Table.Row[i]);
+			
+			for (j = 0; j < data.length; j++) 
+			{
+				if (data[j] === null) {
+					var temporary = "";
+				} else {
+					var temporary = data[j];
+				}
+			
+			
+				if (j == 2) {
+					var hubs = jsonObj.Mainline.Table.Row[i].Hubs.Hub;
+					
+					html_text += "<td><ul>";
+					for (z = 0; z < hubs.length; z++) 
+					{
+						if (hubs[z] === null) {
+							var temp_hub = "";
+						} else {
+							var temp_hub = hubs[z];
+						}
+					
+					
+							if (z == 0) {
+							html_text += "<li style='font-weight:bold;'>" + temp_hub + "</li>";
+							} 
+							else {	
+							html_text += "<li>" + temp_hub + "</li>";
+							}
+					}
+					html_text += "</ul></td>";
+				}
+
+				
+				
+				
+				else if (j == 4) {
+					html_text += "<td><a href='" + temporary + "'>" + temporary + "</a></td>";
+				}
+				else if (j == 5) {
+					html_text += "<td><img src='" + temporary + "' width='200px;'></td>";
+				}
+				else {
+				html_text += "<td>" + temporary + "</td>";
+				}
+			}
+			
+			html_text += "</tr>";
+		}
+		
+		
+		html_text += "</table></body></html>";
+	
+	}
+	
+	hWin = window.open("", "Assignment4", "height=600,width=1200");
+	hWin.document.write(html_text);
+	hWin.document.close();
+	
+	window.location = window.location.href.split("?")[0];
+	
+	}	
+
+</script>
+
+	</body>
+</html>
+
