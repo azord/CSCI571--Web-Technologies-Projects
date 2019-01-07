@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>HW8</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2sb9ZwEBxnV8RepMMHZQ-M84uAnBt85c&libraries=places"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> 
+    <script src="main.js"></script>
+
+</head>
+<body onload="myFunction()" ng-app="HW8">
+
+<!-------------------------------form---------------->    
+        
+    <div class="container top" >
+        <div class="d-flex justify-content-center">
+    <div class="card card-body bg-light">
+        
+        <h6 class="text-center">Travel and Entertainment Search</h6>
+
+    <!---<form id="mainForm" class="needs-validation" novalidate ng-controller="ExampleController">--->
+    <form id="mainForm" class="css-form" novalidate ng-controller="formController" name="mainForm">
+
+        <div class="form-group row">
+            <div class="col-sm-2">
+            </div>
+    <label for="keyword" class="col-sm-2 col-form-label required" required>Keyword</label>
+    <div class="col-sm-6">
+      <input type="text" name="keyword" ng-model="form.keyword" id="keyword" class="form-control form-control-sm needs-validation" required>
+        <span ng-show="mainForm.keyword.$touched && mainForm.keyword.$invalid">
+		<div class="invalid-feedback" id="for_keyword" style="display:unset;">
+          Please enter a keyword.
+        </div>
+		</span>
+    </div>
+            
+            <div class="col-sm-2">
+            </div>
+        </div>
+            
+            
+  <div class="form-group row">
+            <div class="col-sm-2">
+            </div>
+    <label for="category" class="col-sm-2 col-form-label">Category</label>
+    <div class="col-sm-4">
+      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+        <option selected>Default</option>
+        <option value="airport">Airport</option>
+        <option value="amusement_park">Amusement Park</option>
+        <option value="aquarium">Aquarium</option>
+        <option value="art_gallery">Art Gallery</option>
+        <option value="bakery">Bakery</option>
+        <option value="bar">Bar</option>
+        <option value="beauty_salon">Beauty Salon</option>
+        <option value="bowling_alley">Bowling Alley</option>
+        <option value="bus_station">Bus Station</option>
+        <option value="cafe">Cafe</option>
+        <option value="campground">Campground</option>
+        <option value="car_rental">Car Rental</option>
+        <option value="casino">Casino</option>
+        <option value="lodging">Lodging</option>
+        <option value="movie_theater">Movie Theater</option>
+        <option value="museum">Museum</option>
+        <option value="night_club">Night Club</option>
+        <option value="park">Park</option>
+        <option value="parking">Parking</option>
+        <option value="restaurant">Restaurant</option>
+        <option value="shopping_mall">Shopping Mall</option>
+        <option value="stadium">Stadium</option>
+        <option value="subway_station">Subway Station</option>
+        <option value="taxi_stand">Taxi Stand</option>
+        <option value="train_station">Train Station</option>
+        <option value="transit_station">Transit Station</option>
+        <option value="travel_agency">Travel Agency</option>
+        <option value="zoo">Zoo</option>
+      </select>
+    </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+        
+        
+        <div class="form-group row">
+            <div class="col-sm-2">
+            </div>
+    <label for="distance" class="col-sm-2 col-form-label">Distance (miles)</label>
+    <div class="col-sm-4">
+      <input type="text" name="distance" id="distance" class="form-control form-control-sm" placeholder="10">
+    </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+        
+        
+        <div class="form-group row">
+            <div class="col-sm-2">
+            </div>
+    <label for="from" class="col-sm-2 col-form-label required">From</label>
+            
+    <div class="col-sm-6">
+        
+        
+<div class="custom-control custom-radio">
+  <input type="radio" id="customRadio1" ng-model="form.location" ng-value="true" name="location" class="custom-control-input" checked>
+  <label class="custom-control-label" for="customRadio1">Current location</label>
+    <input type="hidden" id="currentLocation" name="currentLocation" value="">
+</div>
+        
+<div class="custom-control custom-radio">
+  <input type="radio" id="customRadio2" name="location" ng-model="form.location" ng-value="false" class="custom-control-input">
+  <label class="custom-control-label" for="customRadio2">Other.Please specify:</label>
+      <input type="text" name="location" ng-model="form.specify" class="form-control form-control-sm needs-validation" id="specifyLocation" placeholder="Enter a location" required disabled>
+		<span ng-show="mainForm.location.$touched && mainForm.location.$invalid">
+		<div class="invalid-feedback" id="for_location" style="display:unset;">
+          Please enter a location.
+        </div>
+		</span>
+</div>
+        
+    </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <div class="col-sm-2">
+            </div>
+    
+    <div class="col-sm-4">
+        <button  class="btn btn-primary" type="submit" id="search" ng-disabled="mainForm.keyword.$invalid || (!form.location && mainForm.location.$invalid)"><span class="fas fa-search"></span> Search</button>
+      <button type="button" class="btn btn-light clear" style="background-color: white; border-color: silver;">Clear</button> 
+    </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+       
+        </form>
+    </div>
+    </div>
+    </div>
+	
+<!----------------------------------------------->
+    
+    <div class="container top" id="mainContainer">
+        <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-primary">Results</button>
+            <button type="button" class="btn btn-link" style="text-decoration: none !important; ">Favorites</button>
+        </div>
+        
+        
+        <div class="top-progress-bar" id="progressBar" style="display:none;">
+    <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+        </div>
+    </div>
+    </div>
+        
+        <!-----<div class="top">
+        <h5 class="text-center">Pacific Coast Youth Football and Cheer</h5>
+            </div>--------------->
+        
+        <!--------------------details button------------------->
+        <div class="top" id="detailsButton" style="display:none;">
+		<div class="d-flex justify-content-end">
+		<button type="button" class="btn btn-light clear" style="background-color: white; border-color: silver;" disabled>Details <span class="fas fa-angle-right"></span>
+		</button>
+		</div>
+		</div>
+        
+        
+        <!--------------------------list, favorites, twitter buttons--------->
+		<!-------------
+	   <div class="top">
+            <div class="d-flex">
+                <div class="mr-auto p-2">
+                <button type="button" class="btn btn-light clear" style="background-color: white; border-color: silver;"><span class="fas fa-chevron-left"></span> List</button>
+                    </div>
+                <div class="p-2">
+                    
+                    <button type="button" class="btn btn-light clear" style="background-color: white; border-color: silver;"><span class="far fa-star"></span></button>
+                    <button type="button" class="btn btn-light clear" style="background-color: #1DA1F2 !important; color: white;"><span class="fab fa-twitter"></span></button>
+                    
+                    <!---<button type="button" class="btn btn-light clear" style="background-color: white; border-color: silver; color:yellow;"><span class="fas fa-star"></span></button>
+                    <button type="button" class="btn btn-light clear" style="background-color: #1DA1F2 !important; color: white;"><span class="fab fa-twitter"></span></button>
+                
+                
+                </div>
+                
+            </div>
+        </div>
+        ---->
+
+        <!-----------------------------------table------------>
+        <div class="container top" id="resultTable" style="display:none;">
+            
+        </div>
+
+
+		
+    </div>
+    
+    
+<script>
+   
+	  
+	  
+	  
+	  
+	  
+	  
+    ///////////////////////////////////////////////////////////////////
+</script>
+    
+    
+<script type='text/javascript'>
+	mainUrl = "http://localhost:8080/";
+	
+
+    $("#mainForm").submit(function(event) {
+	
+      event.preventDefault();
+	  
+	  var radius = $("#distance").val();
+		
+		if (radius == "") {
+			radius = 10 * 16093;
+		} else {
+			radius = radius * 16093;
+		}
+		
+		var category = $("#inlineFormCustomSelect").val();
+		var keyword = $("#keyword").val();
+		
+		keyword = keyword.split(' ').join('+');
+	  
+	  if ($("#customRadio1").is(':checked')) {
+		
+		
+	if (category == "Default") {
+		var url = mainUrl + "coordinates/" + $("#currentLocation").val() + "/radius/" + radius + "/keyword/" + keyword;
+	} 
+	else {
+		var url = mainUrl + "coordinates/" + $("#currentLocation").val() + "/radius/" + radius + "/type/" + category + "/keyword/" + keyword;
+	}
+		} 
+	
+	
+	else {
+		var specifyLocation = $("#specifyLocation").val();
+		specifyLocation = specifyLocation.split(' ').join('+');
+		
+		var url = mainUrl + "specificLocation/" + specifyLocation + "/radius/" + radius + "/type/" + category + "/keyword/" + keyword;
+		
+	}
+		$("#resultTable").hide();
+		$("#progressBar").show();
+		$("#detailsButton").hide();
+	  
+	  $.get(url, function(data) {
+	  
+		$("#resultTable").html("");
+	  
+		$("#progressBar").hide();
+		
+		
+		$("#resultTable").show();
+		
+		if (data.status == "OK") {
+		
+		$("#detailsButton").show();
+		
+		var table = "<table class='table table-hover'><thead><tr><th>#</th><th>Category</th><th>Name</th><th>Address</th><th>Favorite</th><th>Details</th></tr></thead><tbody>";
+		
+		for (var i = 0; i < data.results.length; i++) 
+		{
+		
+		table += "<tr><td>" + (i + 1) + "</td><td><img style=\"max-width: 40%; height: auto;\" src='" + data.results[i].icon + "'></td><td class=\"text-nowrap\">" + data.results[i].name + "</td><td class=\"text-nowrap\">" + data.results[i].vicinity + "</td><td><button type=\"button\" class=\"btn btn-light clear\" style=\"background-color: white; border-color: silver;\"><span class=\"far fa-star\"></span></button></td><td><button type=\"button\" class=\"btn btn-light clear\" onclick=\"showDetails('" + data.results[i].place_id + "', " + data.results[i].geometry.location.lat +", " + data.results[i].geometry.location.lng +")\" style=\"background-color: white; border-color: silver;\"><span class=\"fas fa-angle-right\"></span></button></td></tr>";
+		
+		}
+		
+		table += "</tbody></table>";
+		
+		if (typeof data.next_page_token != "undefined") {
+			
+			dataFromPage1 = data;
+			
+			table += "<div class=\"top\"><div class=\"d-flex justify-content-center\"><button type=\"button\" onclick=\"nextResultButton('" + data.next_page_token + "', 1)\" class=\"btn btn-light clear\" style=\"background-color: white; border-color: silver;\">Next</button></div></div>";
+		}
+		
+		} 
+		
+		else if (data.status == "ZERO_RESULTS") {
+			var table = "<div class=\"alert alert-warning top\" role=\"alert\">No records.</div>";
+		} else {
+			var table = "<div class=\"alert alert-danger top\" role=\"alert\">Failed to get search results.</div>";
+		}
+		
+		$("#resultTable").html(table);
+		
+		});
+		
+    });
+	
+	
+	//////////////////////////////////////////////////////////////output next page results
+	function nextResultButton (token, previousPage) {
+	
+	
+		var url = mainUrl + "pagetoken/" + token;
+		
+		$("#resultTable").html("");
+		$("#detailsButton").hide();
+		
+		$("#progressBar").show();
+		
+		$.get(url, function(data) {
+			
+		
+	  
+		$("#progressBar").hide();
+		
+		
+		$("#resultTable").show();
+		
+		if (data.status == "OK") {
+		$("#detailsButton").show();
+		
+		var table = "<table class='table'><thead><tr><th>#</th><th>Category</th><th>Name</th><th>Address</th><th>Favorite</th><th>Details</th></tr></thead><tbody>";
+		
+		for (var i = 0; i < data.results.length; i++) 
+		{
+		
+		table += "<tr><td>" + (i + 1) + "</td><td><img style=\"max-width: 40%; height: auto;\" src='" + data.results[i].icon + "'></td><td class=\"text-nowrap\">" + data.results[i].name + "</td><td class=\"text-nowrap\">" + data.results[i].vicinity + "</td><td><button type=\"button\" class=\"btn btn-light clear\" style=\"background-color: white; border-color: silver;\"><span class=\"far fa-star\"></span></button></td><td><button type=\"button\" class=\"btn btn-light clear\" style=\"background-color: white; border-color: silver;\"><span class=\"fas fa-angle-right\"></span></button></td></tr>";
+		
+		}
+		
+		table += "</tbody></table>";
+		
+		table += "<div class=\"top\"><div class=\"d-flex justify-content-center\"><button type=\"button\" onclick=\"outputPreviousResultTable(" + previousPage + ")\" class=\"btn btn-light clear\" style=\"background-color: white; border-color: silver;\">Previous</button>";
+		
+		
+		if (typeof data.next_page_token !== "undefined") {
+		
+			if (previousPage == 1) {
+				dataFromPage2 = data;
+			}
+		
+			table += "<button type=\"button\" onclick=\"nextResultButton('" + data.next_page_token + "', 2)\" class=\"btn btn-light clear ml-5\" style=\"background-color: white; border-color: silver;\">Next</button></div></div>";
+		}
+		
+		table += "</div></div>";
+		}
+		else if (data.status == "ZERO_RESULTS") {
+			var table = "<div class=\"alert alert-warning top\" role=\"alert\">No records.</div>";
+		} else 
+		{
+			var table = "<div class=\"alert alert-danger top\" role=\"alert\">Failed to get search results.</div>";
+		}
+		
+		
+		$("#resultTable").html(table);
+		
+		});
+	}
+	////////////////////////////////////////////////////////
+	
+	
+	///////////////////////////////////////////////////output previous result table
+	function outputPreviousResultTable(previousPage) {
+		
+		$("#resultTable").html("");
+		
+		var table = "<table class='table'><thead><tr><th>#</th><th>Category</th><th>Name</th><th>Address</th><th>Favorite</th><th>Details</th></tr></thead><tbody>";
+		
+		if (previousPage == 1) {
+			jsonObject = dataFromPage1;
+		} else {
+			jsonObject = dataFromPage2;
+		}
+		
+		
+		for (var i = 0; i < jsonObject.results.length; i++) 
+		{
+		table += "<tr><td>" + (i + 1) + "</td><td><img style=\"max-width: 40%; height: auto;\" src='" + jsonObject.results[i].icon + "'></td><td class=\"text-nowrap\">" + jsonObject.results[i].name + "</td><td class=\"text-nowrap\">" + jsonObject.results[i].vicinity + "</td><td><button type=\"button\" class=\"btn btn-light clear\" style=\"background-color: white; border-color: silver;\"><span class=\"far fa-star\"></span></button></td><td><button type=\"button\" class=\"btn btn-light clear\" style=\"background-color: white; border-color: silver;\"><span class=\"fas fa-angle-right\"></span></button></td></tr>";
+		}
+		
+		table += "</tbody></table>";
+		
+		console.log(previousPage);
+		
+		if (previousPage != 1) {
+		table += "<div class=\"top\"><div class=\"d-flex justify-content-center\"><button type=\"button\" onclick=\"outputPreviousResultTable(" + (previousPage - 1) + ")\" class=\"btn btn-light clear\" style=\"background-color: white; border-color: silver;\">Previous</button>";
+		var nextPageClass = "ml-5";
+		} else {
+		table += "<div class=\"top\"><div class=\"d-flex justify-content-center\">";
+		var nextPageClass = "";
+		}
+		
+		
+		if (typeof jsonObject.next_page_token != "undefined") {
+			table += "<button type=\"button\" onclick=\"nextResultButton('" + jsonObject.next_page_token + "'," + previousPage + ")\" class=\"btn btn-light clear " + nextPageClass + "\" style=\"background-color: white; border-color: silver;\">Next</button></div></div>";
+		}
+		
+		table += "</div></div>";
+		
+		$("#resultTable").html(table);
+
+	}
+	
+	
+	function showDetails(place_id, latitude, longitude) {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: latitude, lng: longitude},
+          zoom: 15
+        });
+
+        var infowindow = new google.maps.InfoWindow();
+        var service = new google.maps.places.PlacesService(map);
+
+        service.getDetails({
+          placeId: place_id
+        }, function(place, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+				showSome();
+          }
+        });
+		
+		
+      }
+	  
+	  function showSome() 	
+	  {
+		
+	  }
+	  
+	  
+	
+	/////////////////////////////////////////////////
+</script>
+
+
+    
+
+
+
+<script>
+ angular.module('HW8', [])
+    .controller('formController', ['$scope', function($scope) {
+	
+	var input = document.getElementById('specifyLocation');
+
+	autocomplete = new google.maps.places.Autocomplete(input);
+	
+	$scope.form = {
+        location: true
+    };
+	
+	
+	
+      //$scope.master = {};
+
+      /*$scope.update = function(user) {
+        $scope.master = angular.copy(user);
+      };
+
+      $scope.reset = function() {
+        $scope.user = angular.copy($scope.master);
+      };
+
+      $scope.reset();*/
+    }]);
+</script>
+	
+	<div id="map"></div>
+        
+		
+		<div class="container">
+  <h2>Toggleable Tabs</h2>
+  <br>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item ml-auto">
+      <a class="nav-link active" data-toggle="tab" href="#info">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#photos">Menu 1</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#reviews">Menu 2</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="info" class="container tab-pane active"><br>
+      <h3>HOME</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+    <div id="photos" class="container tab-pane fade"><br>
+      <h3>Menu 1</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="reviews" class="container tab-pane fade"><br>
+      <h3>Menu 2</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+  </div>
+</div>
+		
+</body>
+</html>

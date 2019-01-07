@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>HW8</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2sb9ZwEBxnV8RepMMHZQ-M84uAnBt85c&libraries=places"></script>
+	<script src="main.js"></script>
+
+</head>
+<body onload="myFunction()" >
+<div ng-app="HW8">
+<!-------------------------------form---------------->    
+    <div class="container top" >
+        <div class="d-flex justify-content-center">
+    <div class="card card-body bg-light">
+        
+        <h6 class="text-center">Travel and Entertainment Search</h6>
+
+    <!---<form id="mainForm" class="needs-validation" novalidate ng-controller="ExampleController">--->
+    <form id="mainForm" class="css-form" novalidate ng-controller="formController" name="mainForm">
+
+        <div class="form-group row">
+            <div class="col-sm-2">
+            </div>
+    <label for="keyword" class="col-sm-2 col-form-label required" required>Keyword</label>
+    <div class="col-sm-6">
+      <input type="text" name="keyword" ng-model="form.keyword" id="keyword" class="form-control form-control-sm needs-validation" required>
+        <span ng-show="mainForm.keyword.$touched && mainForm.keyword.$invalid">
+		<div class="invalid-feedback" id="for_keyword" style="display:unset;">
+          Please enter a keyword.
+        </div>
+		</span>
+    </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+            
+  <div class="form-group row">
+            <div class="col-sm-2">
+            </div>
+    <label for="category" class="col-sm-2 col-form-label">Category</label>
+    <div class="col-sm-4">
+      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+        <option selected>Default</option>
+        <option value="airport">Airport</option>
+        <option value="amusement_park">Amusement Park</option>
+        <option value="aquarium">Aquarium</option>
+        <option value="art_gallery">Art Gallery</option>
+        <option value="bakery">Bakery</option>
+        <option value="bar">Bar</option>
+        <option value="beauty_salon">Beauty Salon</option>
+        <option value="bowling_alley">Bowling Alley</option>
+        <option value="bus_station">Bus Station</option>
+        <option value="cafe">Cafe</option>
+        <option value="campground">Campground</option>
+        <option value="car_rental">Car Rental</option>
+        <option value="casino">Casino</option>
+        <option value="lodging">Lodging</option>
+        <option value="movie_theater">Movie Theater</option>
+        <option value="museum">Museum</option>
+        <option value="night_club">Night Club</option>
+        <option value="park">Park</option>
+        <option value="parking">Parking</option>
+        <option value="restaurant">Restaurant</option>
+        <option value="shopping_mall">Shopping Mall</option>
+        <option value="stadium">Stadium</option>
+        <option value="subway_station">Subway Station</option>
+        <option value="taxi_stand">Taxi Stand</option>
+        <option value="train_station">Train Station</option>
+        <option value="transit_station">Transit Station</option>
+        <option value="travel_agency">Travel Agency</option>
+        <option value="zoo">Zoo</option>
+      </select>
+    </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <div class="col-sm-2">
+            </div>
+    <label for="distance" class="col-sm-2 col-form-label">Distance (miles)</label>
+    <div class="col-sm-4">
+      <input type="text" name="distance" id="distance" class="form-control form-control-sm" placeholder="10">
+    </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <div class="col-sm-2">
+            </div>
+    <label for="from" class="col-sm-2 col-form-label required">From</label>
+            
+    <div class="col-sm-6">
+        
+<div class="custom-control custom-radio">
+  <input type="radio" id="customRadio1" ng-model="form.location" ng-value="true" name="location" class="custom-control-input" checked>
+  <label class="custom-control-label" for="customRadio1">Current location</label>
+    <input type="hidden" id="currentLocation" name="currentLocation" value="">
+</div>
+        
+<div class="custom-control custom-radio">
+  <input type="radio" id="customRadio2" name="location" ng-model="form.location" ng-value="false" class="custom-control-input">
+  <label class="custom-control-label" for="customRadio2">Other.Please specify:</label>
+      <input type="text" name="location" ng-model="form.specify" class="form-control form-control-sm needs-validation" id="specifyLocation" placeholder="Enter a location" required disabled>
+		<span ng-show="mainForm.location.$touched && mainForm.location.$invalid">
+		<div class="invalid-feedback" id="for_location" style="display:unset;">
+          Please enter a location.
+        </div>
+		</span>
+</div>
+        
+    </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <div class="col-sm-2">
+            </div>
+    
+    <div class="col-sm-4">
+        <button  class="btn btn-primary" type="submit" id="search" ng-disabled="mainForm.keyword.$invalid || (!form.location && mainForm.location.$invalid)"><span class="fas fa-search"></span> Search</button>
+      <button type="button" class="btn btn-light clear" style="background-color: white; border-color: silver;">Clear</button> 
+    </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+    </div>
+	
+<!----------------------------------------------->
+    
+    <div class="container top" id="mainContainer">
+        <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-primary">Results</button>
+            <button type="button" class="btn btn-link" style="text-decoration: none !important; ">Favorites</button>
+        </div>
+        
+        <div class="top-progress-bar" id="progressBar" style="display:none;">
+    <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+        </div>
+    </div>
+    </div>
+        
+        
+        <!--------------------------list, favorites, twitter buttons--------->
+		<!-------------
+	   
+        ---->
+		<div id="resultAndDetail" ng-controller="resultAndDetail">
+		
+		<div class="check-element result-list-table-show-hide" ng-show="slideDetails">
+		<div class="top" id="detailsButton" style="display:none;">
+		<div class="d-flex justify-content-end">
+		<button type="button" ng-click="slideDetails=false" class="btn btn-light clear" style="background-color: white; border-color: silver;" disabled>Details <span class="fas fa-angle-right"></span>
+		</button>
+		</div>
+		</div>
+        <!-----------------------------------table------------>
+        <div class="container top" id="resultTable" style="display:none;">
+        </div>
+        </div>
+		
+	<div class="check-element detail-show-hide" ng-hide="slideDetails">
+		<!----details result---->
+	<div class="top">
+        <h5 class="text-center font-weight-bold" id="detailName"></h5>
+    </div>
+  <div class="top">
+            <div class="d-flex">
+                <div class="mr-auto p-2">
+                <button type="button" ng-click="slideDetails=true" class="btn btn-light clear" style="background-color: white; border-color: silver;"><span class="fas fa-chevron-left"></span> List</button>
+                    </div>
+                <div class="p-2">
+                    
+                <button type="button" class="btn btn-light clear" style="background-color: white; border-color: silver;"><span class="far fa-star"></span></button>
+                
+                <button type="button" class="btn btn-light clear" style="background-color: white; border-color: silver; color:yellow;"><span class="fas fa-star"></span></button>
+                <button type="button" class="btn btn-light clear" style="background-color: #1DA1F2 !important; color: white;"><span class="fab fa-twitter"></span></button>
+                
+                </div>
+                
+            </div>
+        </div>
+  
+  
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item ml-auto">
+      <a class="nav-link active" data-toggle="tab" onclick="hideTabs('info')" href="#info">Info</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" onclick="hideTabs('photos')" href="#photos">Photos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" onclick="hideTabs('mapDetail')" href="#mapDetail">Map</a>
+    </li>
+	<li class="nav-item">
+      <a class="nav-link" data-toggle="tab" onclick="hideTabs('reviews')" href="#reviews">Reviews</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  
+    <div id="info" class="tab-pane active"><br>
+    
+    </div>
+	
+    <div id="photos" class="container tab-pane fade"><br>
+	
+    </div>
+    <div id="mapDetail" class="container tab-pane fade"><br>
+      <h3>Menu 2</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+	<div id="reviews" class="container tab-pane fade"><br>
+      <h3>Menu 222222</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+		<!--------detail table------------>
+	</div>
+	
+    </div>
+    
+	<div id="map"></div>
+	
+	
+
+	
+	
+	
+
+
+	
+</body>
+</html>
